@@ -10,14 +10,66 @@
   <div class="card">
     
     <!-- Error screen: shown only if validateData() fails -->
-    <div id="screen-error" class="hidden">
+    <div id="screen-error" class="screen hidden">
       <h2 class="error-title">Quiz Error</h2>
-      <p id="error-message"></p>
+      <p id="error-message">Failed to load quiz data.</p>
     </div>
 
-    <!-- Main title placeholder for now -->
-    <div id="screen-start">
+    <!-- Screen 1: Start Screen -->
+    <div id="screen-start" class="screen">
       <h1>Testify</h1>
+      <p class="subtitle">Select a category to start your quiz:</p>
+      
+      <!-- Category selection dropdown -->
+      <div class="form-group">
+        <label for="category-select">Category:</label>
+        <select id="category-select" class="form-control">
+          <option value="all">All Topics</option>
+        </select>
+      </div>
+
+      <!-- Live question count badge -->
+      <p id="start-count" class="question-count-badge">5 Questions</p>
+      <button id="btn-start" class="btn" type="button">Start Quiz</button>
+    </div>
+
+    <!-- Screen 2: Active Quiz Screen -->
+    <div id="screen-quiz" class="screen hidden">
+      <!-- Header with question counter and category badge -->
+      <div class="quiz-header">
+        <span id="tracker" class="tracker-text">Question 1 of 5</span>
+        <span id="category-name" class="category-badge">HTML</span>
+      </div>
+
+      <!-- Animated progress bar -->
+      <div class="progress-track">
+        <div id="progress-bar" class="progress-fill"></div>
+      </div>
+
+      <!-- Question prompt -->
+      <h2 id="question-text" class="question-title">Question prompt goes here</h2>
+
+      <!-- Dynamic options list -->
+      <div id="options-container" class="options-container">
+        <!-- Option buttons will be rendered by JavaScript -->
+      </div>
+
+      <!-- Inline validation warning -->
+      <p id="validation-msg" class="validation-msg hidden">Please select an answer.</p>
+
+      <!-- Explanation box shown after answering -->
+      <p id="explanation-text" class="explanation-box hidden"></p>
+
+      <!-- Next question / view results button -->
+      <button id="btn-next" class="btn" type="button">Next Question</button>
+    </div>
+
+    <!-- Screen 3: Results Screen -->
+    <div id="screen-result" class="screen hidden">
+      <h2>Quiz Results</h2>
+      <p class="final-score" id="score-text">0 / 5 (0%)</p>
+      <p id="result-message" class="result-message">Good effort!</p>
+      <button id="btn-restart" class="btn" type="button">Restart Quiz</button>
     </div>
 
   </div>
