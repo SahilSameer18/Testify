@@ -1,8 +1,42 @@
-/* Baseline connection check */
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: #f1f5f9;
   color: #0f172a;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
 }
 
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 520px;
+  padding: 28px 24px;
+}
+
+h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* Error message styles */
+.error-title {
+  color: #dc2626;
+  margin-bottom: 8px;
+}
+
+#error-message {
+  color: #475569;
+  font-size: 14px;
+}
+
+/* Utility to toggle visibility */
+.hidden {
+  display: none !important;
+}
