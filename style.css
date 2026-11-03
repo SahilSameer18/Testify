@@ -1,0 +1,8 @@
+/* Baseline connection check */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #f1f5f9;
+  color: #0f172a;
+  padding: 20px;
+}
+
