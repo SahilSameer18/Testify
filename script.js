@@ -1,15 +1,14 @@
-// Quiz configuration
+// 1. Settings and quiz state
 const QUIZ_CONFIG = {
-  questionsPerRound: 5 // Number of questions per quiz round
+  questionsPerRound: 5 // How many questions to show per game
 };
 
-// Quiz runtime state
-let activeQuestions = [];
-let currentIndex = 0;
-let score = 0;
-let hasAnswered = false;
+let activeQuestions = []; // Questions picked for the current round
+let currentIndex = 0;     // Index of the question currently on screen (starts at 0)
+let score = 0;            // Number of right answers so far
+let hasAnswered = false;  // Stops the user from clicking twice on one question
 
-// DOM elements
+// 2. Grab HTML elements by their ID so JavaScript can update them
 const screenError = document.getElementById("screen-error");
 const errorMessage = document.getElementById("error-message");
 const screenStart = document.getElementById("screen-start");
@@ -33,7 +32,7 @@ const scoreText = document.getElementById("score-text");
 const resultMessage = document.getElementById("result-message");
 const btnRestart = document.getElementById("btn-restart");
 
-// Validate question data before the quiz runs
+// 3. Check that questions.js loaded properly and every question is valid
 function validateData() {
   if (typeof QUIZ_QUESTIONS === "undefined" || !Array.isArray(QUIZ_QUESTIONS) || QUIZ_QUESTIONS.length === 0) {
     showError("Question bank (questions.js) is missing or empty.");
@@ -43,6 +42,7 @@ function validateData() {
   for (let i = 0; i < QUIZ_QUESTIONS.length; i++) {
     const q = QUIZ_QUESTIONS[i];
 
+    // Make sure every required field is present and has the right type
     const isCategoryValid = typeof q.category === "string" && q.category.trim() !== "";
     const isQuestionValid = typeof q.question === "string" && q.question.trim() !== "";
     const areOptionsValid = Array.isArray(q.options) && q.options.length === 4 && q.options.every(opt => typeof opt === "string" && opt.trim() !== "");
@@ -58,7 +58,7 @@ function validateData() {
   return true;
 }
 
-// Display error card and halt quiz
+// 4. Show the error box and hide all other screens
 function showError(message) {
   if (screenStart) {
     screenStart.classList.add("hidden");
@@ -75,7 +75,7 @@ function showError(message) {
   }
 }
 
-// Filter questions by selected category
+// 5. Return only the questions that match the chosen category
 function getCategoryPool(chosen) {
   if (chosen === "all") {
     return QUIZ_QUESTIONS;
@@ -83,21 +83,21 @@ function getCategoryPool(chosen) {
   return QUIZ_QUESTIONS.filter(q => q.category === chosen);
 }
 
-// Populate the category dropdown dynamically using Set
+// 6. Fill the category dropdown automatically from QUIZ_QUESTIONS
 function initCategories() {
-  // Clear any existing options safely
+  // Clear any placeholder options safely
   categorySelect.replaceChildren();
 
-  // Add the default "All Topics" option
+  // Add "All Topics" as the first dropdown item
   const allOption = document.createElement("option");
   allOption.value = "all";
   allOption.textContent = "All Topics";
   categorySelect.appendChild(allOption);
 
-  // Extract unique category names from QUIZ_QUESTIONS
+  // Pull all category names, remove duplicates with Set, and turn back into an array
   const categories = [...new Set(QUIZ_QUESTIONS.map(q => q.category))];
 
-  // Append each category to the dropdown
+  // Create one dropdown item for each unique category
   categories.forEach(cat => {
     const opt = document.createElement("option");
     opt.value = cat;
@@ -105,29 +105,29 @@ function initCategories() {
     categorySelect.appendChild(opt);
   });
 
-  // Set initial question count badge and listen for category changes
+  // Update the count badge now, and whenever the user picks a different category
   updateStartCount();
   categorySelect.addEventListener("change", updateStartCount);
 }
 
-// Update the question count badge on the start screen
+// 7. Update the "5 Questions" text on the start screen
 function updateStartCount() {
   const pool = getCategoryPool(categorySelect.value);
   const count = Math.min(QUIZ_CONFIG.questionsPerRound, pool.length);
   startCount.textContent = count === 1 ? "1 Question" : `${count} Questions`;
 }
 
-// Fisher-Yates shuffle: returns a shuffled copy without modifying the original array
+// 8. Fisher-Yates shuffle: mixes a copy of the array without changing the original data
 function shuffle(array) {
-  const arr = [...array];
+  const arr = [...array]; // Shallow copy so QUIZ_QUESTIONS stays untouched
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+    [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap the two items
   }
   return arr;
 }
 
-// Start a new quiz round based on the chosen category
+// 9. Start a new quiz round
 function startQuiz() {
   const pool = getCategoryPool(categorySelect.value);
   if (pool.length === 0) {
@@ -146,17 +146,17 @@ function startQuiz() {
   renderQuestion();
 }
 
-// Render the current question and its option buttons safely
+// 10. Show the current question and its 4 option buttons
 function renderQuestion() {
   const q = activeQuestions[currentIndex];
   hasAnswered = false;
 
-  // Update header, category badge, and progress bar
+  // Update question counter, category pill, and progress bar width
   tracker.textContent = `Question ${currentIndex + 1} of ${activeQuestions.length}`;
   categoryName.textContent = q.category;
   progressBar.style.width = `${((currentIndex + 1) / activeQuestions.length) * 100}%`;
 
-  // Use textContent so HTML tags like <nav> or <h1> display as plain text
+  // Use textContent so HTML tags like <nav> or <h1> show as normal text
   questionText.textContent = q.question;
   optionsContainer.replaceChildren();
 
@@ -169,22 +169,22 @@ function renderQuestion() {
     optionsContainer.appendChild(btn);
   });
 
-  // Reset validation warning and explanation from the previous question
+  // Hide old messages from the previous question
   validationMsg.classList.add("hidden");
   explanationText.classList.add("hidden");
   explanationText.textContent = "";
 
-  // Show "View Results" on the last question
+  // On the last question, label the button "View Results"
   const isLast = currentIndex === activeQuestions.length - 1;
   btnNext.textContent = isLast ? "View Results" : "Next Question";
 }
 
-// Evaluate user's choice, show instant feedback, and disable options
+// 11. Check the clicked answer, color the buttons, and show the explanation
 function selectAnswer(index) {
   if (hasAnswered) return;
   hasAnswered = true;
 
-  // Hide validation warning immediately once an option is selected
+  // Clear the "Please select an answer" warning if it was visible
   validationMsg.classList.add("hidden");
 
   const q = activeQuestions[currentIndex];
@@ -198,18 +198,17 @@ function selectAnswer(index) {
     buttons[q.correct].classList.add("correct");
   }
 
-  // Disable buttons both natively and via CSS class
+  // Disable all 4 buttons so the user cannot change their answer
   buttons.forEach(btn => {
     btn.disabled = true;
     btn.classList.add("disabled");
   });
 
-  // Reveal educational explanation
   explanationText.textContent = q.explanation;
   explanationText.classList.remove("hidden");
 }
 
-// Handle Next button click with form validation
+// 12. Move to the next question, or show warning if no answer was picked
 function handleNext() {
   if (!hasAnswered) {
     validationMsg.classList.remove("hidden");
@@ -224,7 +223,7 @@ function handleNext() {
   }
 }
 
-// Show final score, percentage, and 3-tier feedback message
+// 13. Show the final score and a feedback message
 function showResults() {
   screenQuiz.classList.add("hidden");
   screenResult.classList.remove("hidden");
@@ -242,7 +241,7 @@ function showResults() {
   }
 }
 
-// Reset quiz state and return to the start screen
+// 14. Reset everything and go back to the start screen
 function restartQuiz() {
   currentIndex = 0;
   score = 0;
@@ -258,12 +257,11 @@ function restartQuiz() {
   updateStartCount();
 }
 
-// Bind button click handlers
+// 15. Connect button clicks and start the app when the page loads
 btnStart.addEventListener("click", startQuiz);
 btnNext.addEventListener("click", handleNext);
 btnRestart.addEventListener("click", restartQuiz);
 
-// Validate data and initialize categories on page load
 if (validateData()) {
   initCategories();
 }

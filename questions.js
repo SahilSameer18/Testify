@@ -7,7 +7,7 @@
 // - explanation: Short explanation shown after the user answers
 
 const QUIZ_QUESTIONS = [
-  // HTML questions
+  // HTML questions (12)
   {
     category: "HTML",
     question: "Which HTML5 element is used for primary navigation links?",
@@ -57,8 +57,43 @@ const QUIZ_QUESTIONS = [
     correct: 1,
     explanation: "The 'range' input type provides a slider control for selecting numeric values."
   },
+  {
+    category: "HTML",
+    question: "Which HTML element defines a table row?",
+    options: ["<td>", "<th>", "<row>", "<tr>"],
+    correct: 3,
+    explanation: "<tr> stands for table row, whereas <td> and <th> define cells inside the row."
+  },
+  {
+    category: "HTML",
+    question: "Which tag creates an unordered (bulleted) list?",
+    options: ["<ol>", "<ul>", "<li>", "<list>"],
+    correct: 1,
+    explanation: "<ul> defines an unordered (bulleted) list, while <ol> creates an ordered (numbered) list."
+  },
+  {
+    category: "HTML",
+    question: "Which HTML element is used to play an audio file?",
+    options: ["<audio>", "<sound>", "<music>", "<mp3>"],
+    correct: 0,
+    explanation: "The <audio> tag embeds sound content in an HTML5 document."
+  },
+  {
+    category: "HTML",
+    question: "Which attribute makes an <input> field mandatory before submitting a form?",
+    options: ["validate", "important", "required", "must"],
+    correct: 2,
+    explanation: "Adding the 'required' attribute stops a form from submitting if the field is empty."
+  },
+  {
+    category: "HTML",
+    question: "Which HTML element draws a horizontal thematic break line?",
+    options: ["<line>", "<br>", "<divider>", "<hr>"],
+    correct: 3,
+    explanation: "<hr> creates a horizontal rule, while <br> inserts a single line break."
+  },
 
-  // CSS questions
+  // CSS questions (12)
   {
     category: "CSS",
     question: "What property creates space inside an element's border?",
@@ -108,8 +143,43 @@ const QUIZ_QUESTIONS = [
     correct: 0,
     explanation: "Setting 'box-sizing: border-box' makes width and height include padding and borders."
   },
+  {
+    category: "CSS",
+    question: "Which CSS property controls the size of text?",
+    options: ["text-size", "font-weight", "font-size", "size"],
+    correct: 2,
+    explanation: "'font-size' sets the height of text characters."
+  },
+  {
+    category: "CSS",
+    question: "How do you make text bold using CSS?",
+    options: ["font-weight: bold", "font-style: bold", "text-weight: bold", "font: heavy"],
+    correct: 0,
+    explanation: "'font-weight' controls how thick or bold text characters appear."
+  },
+  {
+    category: "CSS",
+    question: "Which CSS property rounds the corners of a box?",
+    options: ["corner-radius", "border-style", "border-radius", "round-corner"],
+    correct: 2,
+    explanation: "'border-radius' rounds the outer corners of an element's border."
+  },
+  {
+    category: "CSS",
+    question: "Which property controls the stacking order of overlapping positioned elements?",
+    options: ["layer-index", "z-index", "stack-order", "depth"],
+    correct: 1,
+    explanation: "'z-index' specifies which overlapping element appears in front (higher numbers sit on top)."
+  },
+  {
+    category: "CSS",
+    question: "Which CSS pseudo-class applies styles when a user moves their mouse over an element?",
+    options: [":active", ":focus", ":visited", ":hover"],
+    correct: 3,
+    explanation: "The :hover pseudo-class activates when the user points at an element with a cursor."
+  },
 
-  // JavaScript questions
+  // JavaScript questions (12)
   {
     category: "JavaScript",
     question: "Which method converts a JSON string into a JavaScript object?",
@@ -158,5 +228,40 @@ const QUIZ_QUESTIONS = [
     options: ["pop()", "shift()", "slice()", "unshift()"],
     correct: 0,
     explanation: "pop() removes and returns the last element from an array."
+  },
+  {
+    category: "JavaScript",
+    question: "Which array method adds a new item to the end of an array?",
+    options: ["unshift()", "push()", "concat()", "append()"],
+    correct: 1,
+    explanation: "push() adds one or more elements to the end of an array and returns the new length."
+  },
+  {
+    category: "JavaScript",
+    question: "Which DOM method selects the first element matching a CSS selector?",
+    options: ["getElementById()", "getElementsByClassName()", "querySelectorAll()", "querySelector()"],
+    correct: 3,
+    explanation: "querySelector() returns the first matching element, whereas querySelectorAll() returns all matches."
+  },
+  {
+    category: "JavaScript",
+    question: "Which property returns the number of elements in an array?",
+    options: ["length", "size", "count", "total"],
+    correct: 0,
+    explanation: "array.length gives the total count of items inside an array."
+  },
+  {
+    category: "JavaScript",
+    question: "Which Math method rounds a number down to the nearest whole integer?",
+    options: ["Math.round()", "Math.floor()", "Math.ceil()", "Math.abs()"],
+    correct: 1,
+    explanation: "Math.floor() always rounds a number down to the nearest integer (for example, 4.9 becomes 4)."
+  },
+  {
+    category: "JavaScript",
+    question: "Which method converts an array's items into a single string separated by a chosen delimiter?",
+    options: ["split()", "slice()", "join()", "toString()"],
+    correct: 2,
+    explanation: "join() combines all array elements into one string using the separator you pass in."
   }
 ];
